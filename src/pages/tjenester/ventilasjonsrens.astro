@@ -1,0 +1,33 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import ServiceDetail from '../../components/ServiceDetail.astro';
+import CtaBanner from '../../components/CtaBanner.astro';
+---
+
+<Layout title="Ventilasjonsrens – Reneste" description="Profesjonell ventilasjonsrens for bedre inneklima og lavere energikostnader. Gratis befaring." activePage="tjenester">
+
+  <PageHeader label="Tjenester" heading="Ventilasjonsrens" text="Bedre inneklima og lavere energikostnader med rene ventilasjonskanaler." />
+
+  <ServiceDetail
+    heading="Hva vi gjør"
+    intro="Ventilasjonskanaler samler opp støv, pollen, fett og annet belegg over tid. Dette reduserer luftkvaliteten innendørs og kan øke energiforbruket. Vi renser alle typer ventilasjonsanlegg grundig og effektivt."
+    items={[
+      'Fullstendig rens av ventilasjonskanaler',
+      'Rens av ventiler og filtre',
+      'Kontroll av avtrekk og tilluft',
+      'Inspeksjon med kamera ved behov',
+      'Dokumentasjon av utført arbeid',
+    ]}
+    imagePlaceholder="Bilde: Ventilasjonsrens i aksjon"
+    whyHeading="Hvorfor rense ventilasjonen?"
+    whyCards={[
+      { title: 'Bedre inneklima', text: 'Rene kanaler gir friskere luft og reduserer risikoen for allergi og luftveisplager.' },
+      { title: 'Lavere energiforbruk', text: 'Tilstoppede kanaler gjør at ventilasjonsanlegget jobber hardere, noe som øker strømforbruket.' },
+      { title: 'Redusert brannfare', text: 'Fett og støv i kanaler kan utgjøre en brannrisiko, spesielt i kjøkkenventilasjon.' },
+    ]}
+  />
+
+  <CtaBanner heading="Pust friskere i dag" text="Få et gratis tilbud på ventilasjonsrens for din bolig." />
+
+</Layout>

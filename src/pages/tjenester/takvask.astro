@@ -1,0 +1,34 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import ServiceDetail from '../../components/ServiceDetail.astro';
+import CtaBanner from '../../components/CtaBanner.astro';
+---
+
+<Layout title="Takvask – Reneste" description="Profesjonell takvask – fjerning av mose og alger. Skånsom behandling og impregnering. Gratis befaring." activePage="tjenester">
+
+  <PageHeader label="Tjenester" heading="Takvask" text="Fjerning av mose, alger og smuss – for et tak som ser nytt ut og varer lenger." />
+
+  <ServiceDetail
+    heading="Hva vi gjør"
+    intro="Vi tilbyr profesjonell takvask som fjerner mose, alger, lav og annet belegg fra taket ditt. Behandlingen er skånsom og tilpasset taktype, slik at vi oppnår best mulig resultat uten å skade materialet."
+    items={[
+      'Grundig fjerning av mose og alger',
+      'Skånsom høytrykk tilpasset taktype',
+      'Biologisk etterbehandling som hindrer gjenvekst',
+      'Impregnering for ekstra beskyttelse (valgfritt)',
+      'Inspeksjon av takstein og beslag',
+      'Rens av takrenner inkludert',
+    ]}
+    imagePlaceholder="Bilde: Før og etter takvask"
+    whyHeading="Hvorfor vaske taket?"
+    whyCards={[
+      { title: 'Forlenger levetiden', text: 'Mose og alger holder på fukt som bryter ned takstein over tid. Regelmessig vask kan forlenge takets levetid med mange år.' },
+      { title: 'Forhindrer skader', text: 'Mose kan løfte takstein og skape åpninger for vanninntrengning. Forebygging er langt billigere enn reparasjon.' },
+      { title: 'Øker boligverdien', text: 'Et rent og velholdt tak gir et mye bedre førsteinntrykk og kan øke boligens verdi ved salg.' },
+    ]}
+  />
+
+  <CtaBanner heading="Klar for et renere tak?" text="Vi gir deg et gratis og uforpliktende tilbud. Befaring i hele ditt nærområde." />
+
+</Layout>

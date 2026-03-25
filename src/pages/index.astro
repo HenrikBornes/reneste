@@ -1,0 +1,78 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+---
+
+<Layout title="Reneste – Profesjonell utvendig rengjøring" activePage="hjem">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <p class="section-label">Profesjonell utvendig rengjøring</p>
+        <h1>Vi gjør taket ditt <span>som nytt</span></h1>
+        <p>Reneste fjerner mose, alger og smuss fra tak og fasade – trygt, effektivt og med fornøydgaranti. Få et gratis og uforpliktende tilbud i dag.</p>
+        <div class="hero-buttons">
+          <a href="/tilbud" class="btn btn-primary btn-lg">Få tilbud →</a>
+          <a href="/tjenester" class="btn btn-secondary btn-lg">Våre tjenester</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-image-placeholder">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955a1.126 1.126 0 011.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/>
+          </svg>
+          <span>Bilde: Rent tak etter vask</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tjenester -->
+  <section id="tjenester">
+    <div class="container">
+      <div style="text-align:center; margin-bottom:3rem;">
+        <p class="section-label">Hva vi tilbyr</p>
+        <h2>Våre tjenester</h2>
+        <p style="margin:0.75rem auto 0;">Vi hjelper deg med å holde boligen din ren og velholdt – fra tak til grunn.</p>
+      </div>
+      <div class="services-grid">
+        <ServiceCard icon="🏠" title="Takvask" description="Fjerning av mose, alger og smuss. Skånsom behandling som forlenger takets levetid." href="/tjenester/takvask" />
+        <ServiceCard icon="🧱" title="Fasadevask" description="Profesjonell vask av alle typer fasader. Gir boligen et friskt og innbydende uttrykk." href="/tjenester/fasadevask" />
+        <ServiceCard icon="💨" title="Ventilasjonsrens" description="Bedre inneklima og lavere energikostnader med rene ventilasjonskanaler." href="/tjenester/ventilasjonsrens" />
+        <ServiceCard icon="❄️" title="Varmepumperens" description="Rengjøring av varmepumpe for optimal ytelse og lengre levetid. Snart tilgjengelig." comingSoon={true} />
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust -->
+  <section class="trust">
+    <div class="container">
+      <div style="text-align:center; margin-bottom:3rem;">
+        <p class="section-label">Hvorfor velge oss</p>
+        <h2>Trygt og enkelt</h2>
+      </div>
+      <div class="trust-grid fade-in">
+        <div class="trust-item">
+          <div class="trust-icon">📋</div>
+          <h3>Gratis befaring</h3>
+          <p>Vi kommer hjem til deg og gir et uforpliktende tilbud – helt gratis.</p>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon">✅</div>
+          <h3>Fornøydgaranti</h3>
+          <p>Er du ikke fornøyd, fikser vi det. Ingen spørsmål stilt.</p>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon">🛡️</div>
+          <h3>Trygge metoder</h3>
+          <p>Vi bruker skånsomme og miljøvennlige metoder som tar vare på boligen din.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBanner heading="Klar for en renere bolig?" text="Få et gratis og uforpliktende tilbud i dag. Vi svarer innen 24 timer." />
+
+</Layout>

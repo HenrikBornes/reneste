@@ -1,52 +1,16 @@
-<!DOCTYPE html>
-<html lang="nb">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Få et gratis og uforpliktende tilbud på takvask, fasadevask eller ventilasjonsrens fra Reneste.">
-  <title>Få tilbud – Reneste</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+---
 
-  <header class="header">
-    <div class="container header-inner">
-      <a href="index.html" class="logo">Ren<span>este</span></a>
-      <nav class="nav-links">
-        <a href="index.html">Hjem</a>
-        <a href="tjenester.html">Tjenester</a>
-        <a href="kontakt.html">Kontakt</a>
-      </nav>
-      <a href="tilbud.html" class="btn btn-primary header-cta">Få tilbud</a>
-      <button class="mobile-toggle" aria-label="Meny">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </header>
+<Layout title="Få tilbud – Reneste" description="Få et gratis og uforpliktende tilbud på takvask, fasadevask eller ventilasjonsrens fra Reneste.">
 
-  <nav class="mobile-nav">
-    <a href="index.html">Hjem</a>
-    <a href="tjenester.html">Tjenester</a>
-    <a href="kontakt.html">Kontakt</a>
-    <a href="tilbud.html">Få tilbud</a>
-  </nav>
-
-  <section class="page-header">
-    <div class="container">
-      <p class="section-label">Gratis & uforpliktende</p>
-      <h1>Få tilbud</h1>
-      <p>Svar på noen enkle spørsmål og få et prisestimat med en gang.</p>
-    </div>
-  </section>
+  <PageHeader label="Gratis & uforpliktende" heading="Få tilbud" text="Svar på noen enkle spørsmål og få et prisestimat med en gang." />
 
   <section class="quote-section">
     <div class="container">
       <div class="quote-calculator">
 
-        <!-- Steps indicator -->
         <div class="quote-steps">
           <div class="quote-step active" data-step-num="1">
             <span class="step-num">1</span>
@@ -64,7 +28,7 @@
 
         <div class="quote-body">
 
-          <!-- Step 1: Address -->
+          <!-- Step 1 -->
           <div class="quote-panel active" data-step="1">
             <h3>Hvor bor du?</h3>
             <p>Oppgi adressen din slik at vi kan gi et mer presist estimat.</p>
@@ -76,20 +40,16 @@
               <label>Hvilken tjeneste er du interessert i?</label>
               <div class="option-grid">
                 <div class="option-card selected" data-field="tjeneste" data-value="takvask">
-                  <div class="option-icon">🏠</div>
-                  Takvask
+                  <div class="option-icon">🏠</div>Takvask
                 </div>
                 <div class="option-card" data-field="tjeneste" data-value="fasadevask">
-                  <div class="option-icon">🧱</div>
-                  Fasadevask
+                  <div class="option-icon">🧱</div>Fasadevask
                 </div>
                 <div class="option-card" data-field="tjeneste" data-value="ventilasjonsrens">
-                  <div class="option-icon">💨</div>
-                  Ventilasjon
+                  <div class="option-icon">💨</div>Ventilasjon
                 </div>
                 <div class="option-card" data-field="tjeneste" data-value="flere">
-                  <div class="option-icon">📦</div>
-                  Flere tjenester
+                  <div class="option-icon">📦</div>Flere tjenester
                 </div>
               </div>
             </div>
@@ -99,7 +59,7 @@
             </div>
           </div>
 
-          <!-- Step 2: Property -->
+          <!-- Step 2 -->
           <div class="quote-panel" data-step="2">
             <h3>Fortell oss om boligen</h3>
             <p>Dette hjelper oss å gi et bedre estimat.</p>
@@ -107,38 +67,26 @@
               <label>Type bolig</label>
               <div class="option-grid">
                 <div class="option-card" data-field="boligtype" data-value="enebolig">
-                  <div class="option-icon">🏡</div>
-                  Enebolig
+                  <div class="option-icon">🏡</div>Enebolig
                 </div>
                 <div class="option-card" data-field="boligtype" data-value="rekkehus">
-                  <div class="option-icon">🏘️</div>
-                  Rekkehus
+                  <div class="option-icon">🏘️</div>Rekkehus
                 </div>
                 <div class="option-card" data-field="boligtype" data-value="leilighet">
-                  <div class="option-icon">🏢</div>
-                  Leilighet
+                  <div class="option-icon">🏢</div>Leilighet
                 </div>
                 <div class="option-card" data-field="boligtype" data-value="hytte">
-                  <div class="option-icon">🏔️</div>
-                  Hytte
+                  <div class="option-icon">🏔️</div>Hytte
                 </div>
               </div>
             </div>
             <div class="form-group">
               <label>Taktype (valgfritt)</label>
               <div class="option-grid">
-                <div class="option-card" data-field="taktype" data-value="betongstein">
-                  Betongstein
-                </div>
-                <div class="option-card" data-field="taktype" data-value="teglstein">
-                  Teglstein
-                </div>
-                <div class="option-card" data-field="taktype" data-value="skifer">
-                  Skifer
-                </div>
-                <div class="option-card" data-field="taktype" data-value="annet">
-                  Annet / vet ikke
-                </div>
+                <div class="option-card" data-field="taktype" data-value="betongstein">Betongstein</div>
+                <div class="option-card" data-field="taktype" data-value="teglstein">Teglstein</div>
+                <div class="option-card" data-field="taktype" data-value="skifer">Skifer</div>
+                <div class="option-card" data-field="taktype" data-value="annet">Annet / vet ikke</div>
               </div>
             </div>
             <div class="quote-nav">
@@ -147,13 +95,12 @@
             </div>
           </div>
 
-          <!-- Step 3: Result -->
+          <!-- Step 3 -->
           <div class="quote-panel" data-step="3">
             <div class="quote-result">
               <p class="section-label">Ditt prisestimat</p>
               <div class="price-range">6 000 – 12 000 kr</div>
               <p class="price-note">Estimert pris basert på dine opplysninger. Endelig pris avtales etter befaring.</p>
-
               <div class="send-form">
                 <h3 style="margin-bottom: 1rem;">Send forespørsel</h3>
                 <form id="quoteForm">
@@ -182,7 +129,6 @@
         </div>
       </div>
 
-      <!-- Trust elements below calculator -->
       <div style="display: flex; justify-content: center; gap: 2.5rem; margin-top: 2.5rem; flex-wrap: wrap; color: var(--mid-gray); font-size: 0.9rem;">
         <span>📋 Gratis befaring</span>
         <span>✅ Fornøydgaranti</span>
@@ -191,43 +137,77 @@
     </div>
   </section>
 
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <a href="index.html" class="logo">Ren<span>este</span></a>
-          <p>Profesjonell utvendig rengjøring for boliger i hele Norge.</p>
-        </div>
-        <div>
-          <h4>Tjenester</h4>
-          <ul>
-            <li><a href="tjenester/takvask.html">Takvask</a></li>
-            <li><a href="tjenester/fasadevask.html">Fasadevask</a></li>
-            <li><a href="tjenester/ventilasjonsrens.html">Ventilasjonsrens</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4>Selskap</h4>
-          <ul>
-            <li><a href="kontakt.html">Kontakt</a></li>
-            <li><a href="tilbud.html">Få tilbud</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4>Kontakt</h4>
-          <ul>
-            <li>post@reneste.no</li>
-            <li>+47 XXX XX XXX</li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <span>&copy; 2026 Reneste. Alle rettigheter reservert.</span>
-        <span>Org.nr: XXX XXX XXX</span>
-      </div>
-    </div>
-  </footer>
+</Layout>
 
-  <script src="js/main.js"></script>
-</body>
-</html>
+<script>
+  const quoteCalc = document.querySelector('.quote-calculator');
+  if (quoteCalc) {
+    let currentStep = 1;
+    const state = { address: '', boligtype: '', taktype: '', tjeneste: 'takvask' };
+
+    const panels = quoteCalc.querySelectorAll('.quote-panel');
+    const steps = quoteCalc.querySelectorAll('.quote-step');
+
+    function showStep(step) {
+      panels.forEach(p => p.classList.remove('active'));
+      steps.forEach(s => s.classList.remove('active', 'completed'));
+      const activePanel = quoteCalc.querySelector(`[data-step="${step}"]`);
+      if (activePanel) activePanel.classList.add('active');
+      steps.forEach(s => {
+        const sNum = parseInt(s.dataset.stepNum);
+        if (sNum === step) s.classList.add('active');
+        if (sNum < step) s.classList.add('completed');
+      });
+      currentStep = step;
+    }
+
+    quoteCalc.querySelectorAll('.option-card').forEach(card => {
+      card.addEventListener('click', () => {
+        card.closest('.option-grid').querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+        if (card.dataset.field && card.dataset.value) state[card.dataset.field] = card.dataset.value;
+      });
+    });
+
+    quoteCalc.querySelectorAll('.btn-next').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (currentStep === 1) {
+          const addr = quoteCalc.querySelector('#quoteAddress');
+          if (!addr.value.trim()) { addr.focus(); addr.style.borderColor = '#e53e3e'; setTimeout(() => addr.style.borderColor = '', 2000); return; }
+          state.address = addr.value.trim();
+        }
+        if (currentStep === 2 && !state.boligtype) return;
+        if (currentStep < 3) showStep(currentStep + 1);
+        if (currentStep === 3) calculateEstimate();
+      });
+    });
+
+    quoteCalc.querySelectorAll('.btn-back').forEach(btn => {
+      btn.addEventListener('click', () => { if (currentStep > 1) showStep(currentStep - 1); });
+    });
+
+    function calculateEstimate() {
+      let low = 5000, high = 10000;
+      if (state.boligtype === 'enebolig') { low = 6000; high = 12000; }
+      else if (state.boligtype === 'rekkehus') { low = 4500; high = 9000; }
+      else if (state.boligtype === 'leilighet') { low = 3000; high = 6000; }
+      else if (state.boligtype === 'hytte') { low = 5000; high = 10000; }
+      if (state.taktype === 'betongstein') { low += 1000; high += 2000; }
+      else if (state.taktype === 'skifer') { low += 2000; high += 3000; }
+      const el = quoteCalc.querySelector('.price-range');
+      if (el) el.textContent = `${low.toLocaleString('nb-NO')} – ${high.toLocaleString('nb-NO')} kr`;
+    }
+
+    const quoteForm = document.getElementById('quoteForm');
+    if (quoteForm) {
+      quoteForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Takk! Vi sender deg et tilbud innen 24 timer.');
+        quoteForm.reset();
+        showStep(1);
+      });
+    }
+
+    showStep(1);
+  }
+</script>

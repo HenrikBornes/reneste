@@ -1,0 +1,140 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  activePage?: string;
+}
+
+const { title, description = 'Reneste tilbyr profesjonell takvask, fasadevask og ventilasjonsrens. Gratis befaring og fornøydgaranti.', activePage = '' } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content={description}>
+  <title>{title}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header class="header">
+    <div class="container header-inner">
+      <a href="/" class="logo">Ren<span>este</span></a>
+      <nav class="nav-links">
+        <a href="/" class:list={[{ active: activePage === 'hjem' }]}>Hjem</a>
+        <a href="/tjenester" class:list={[{ active: activePage === 'tjenester' }]}>Tjenester</a>
+        <a href="/kontakt" class:list={[{ active: activePage === 'kontakt' }]}>Kontakt</a>
+      </nav>
+      <a href="/tilbud" class="btn btn-primary header-cta">Få tilbud</a>
+      <button class="mobile-toggle" aria-label="Meny">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <nav class="mobile-nav">
+    <a href="/">Hjem</a>
+    <a href="/tjenester">Tjenester</a>
+    <a href="/kontakt">Kontakt</a>
+    <a href="/tilbud">Få tilbud</a>
+  </nav>
+
+  <slot />
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="/" class="logo">Ren<span>este</span></a>
+          <p>Profesjonell utvendig rengjøring for boliger i hele Norge. Trygt, effektivt og med garanti.</p>
+        </div>
+        <div>
+          <h4>Tjenester</h4>
+          <ul>
+            <li><a href="/tjenester/takvask">Takvask</a></li>
+            <li><a href="/tjenester/fasadevask">Fasadevask</a></li>
+            <li><a href="/tjenester/ventilasjonsrens">Ventilasjonsrens</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Selskap</h4>
+          <ul>
+            <li><a href="/kontakt">Kontakt</a></li>
+            <li><a href="/tilbud">Få tilbud</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Kontakt</h4>
+          <ul>
+            <li>post@reneste.no</li>
+            <li>+47 XXX XX XXX</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; {new Date().getFullYear()} Reneste. Alle rettigheter reservert.</span>
+        <span>Org.nr: XXX XXX XXX</span>
+      </div>
+    </div>
+  </footer>
+
+  <div class="floating-cta">
+    <a href="/tilbud" class="btn btn-primary">Få tilbud →</a>
+  </div>
+
+  <script>
+    // Sticky header
+    const header = document.querySelector('.header');
+    if (header) {
+      window.addEventListener('scroll', () => {
+        header.classList.toggle('scrolled', window.scrollY > 20);
+      });
+    }
+
+    // Mobile nav
+    const mobileToggle = document.querySelector('.mobile-toggle');
+    const mobileNav = document.querySelector('.mobile-nav');
+    if (mobileToggle && mobileNav) {
+      mobileToggle.addEventListener('click', () => {
+        mobileNav.classList.toggle('open');
+        const spans = mobileToggle.querySelectorAll('span');
+        if (mobileNav.classList.contains('open')) {
+          spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+          spans[1].style.opacity = '0';
+          spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+        } else {
+          spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+        }
+      });
+      mobileNav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileNav.classList.remove('open');
+          mobileToggle.querySelectorAll('span').forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+        });
+      });
+    }
+
+    // Scroll animations
+    const fadeElements = document.querySelectorAll('.fade-in');
+    if (fadeElements.length > 0) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      fadeElements.forEach(el => observer.observe(el));
+    }
+  </script>
+</body>
+</html>
+
+<style is:global>
+  @import '../styles/global.css';
+</style>

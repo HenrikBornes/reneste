@@ -1,0 +1,40 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import CtaBanner from '../../components/CtaBanner.astro';
+---
+
+<Layout title="Varmepumperens – Reneste" description="Varmepumperens fra Reneste – kommer snart." activePage="tjenester">
+
+  <PageHeader label="Tjenester" heading="Varmepumperens">
+    <span class="badge" style="font-size:0.85rem; padding:0.35rem 1rem; margin-top:1rem; display:inline-block;">Kommer snart</span>
+  </PageHeader>
+
+  <section class="service-detail">
+    <div class="container">
+      <div class="detail-grid">
+        <div class="detail-content">
+          <h2>Hva vi planlegger</h2>
+          <p>En skitten varmepumpe jobber hardere, bruker mer strøm og gir dårligere luftkvalitet. Vi utvikler nå en tjeneste for profesjonell varmepumperens – både innedel og utedel.</p>
+          <ul class="detail-list">
+            <li>Grundig rens av innedel (filter, vifte, fordamper)</li>
+            <li>Rens av utedel (kondensator, vifte)</li>
+            <li>Desinfisering for bedre luftkvalitet</li>
+            <li>Kontroll av generell tilstand</li>
+          </ul>
+          <p style="background: var(--accent-light); padding: 1.25rem; border-radius: var(--radius-sm); font-size: 0.95rem; max-width: 100%;">
+            <strong>Denne tjenesten er under utvikling.</strong> Vi jobber med å finne de beste metodene og produktene. Kontakt oss gjerne om du ønsker å bli varslet når tjenesten er klar.
+          </p>
+          <br>
+          <a href="/kontakt" class="btn btn-primary">Kontakt oss</a>
+        </div>
+        <div class="detail-image">
+          Bilde: Varmepumpe
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBanner heading="Trenger du hjelp med noe annet?" text="Vi tilbyr takvask, fasadevask og ventilasjonsrens allerede i dag." linkText="Se alle tjenester →" linkHref="/tjenester" />
+
+</Layout>

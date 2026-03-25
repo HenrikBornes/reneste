@@ -1,0 +1,33 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import ServiceDetail from '../../components/ServiceDetail.astro';
+import CtaBanner from '../../components/CtaBanner.astro';
+---
+
+<Layout title="Fasadevask – Reneste" description="Profesjonell fasadevask for alle typer fasader. Gi boligen et friskt uttrykk. Gratis befaring." activePage="tjenester">
+
+  <PageHeader label="Tjenester" heading="Fasadevask" text="Profesjonell vask av alle typer fasader – for et friskt og velholdt utseende." />
+
+  <ServiceDetail
+    heading="Hva vi gjør"
+    intro="Fasaden er boligens ansikt utad. Over tid samler det seg smuss, alger og forurensning som gjør at huset ser slitt og gammelt ut. Vi vasker alle typer fasader – tre, mur, betong og plater – med metoder tilpasset materialet."
+    items={[
+      'Vask av tre-, mur- og betongfasader',
+      'Fjerning av alger, mose og grønnbelegg',
+      'Skånsom lavtrykk for sårbare overflater',
+      'Miljøvennlige rengjøringsmidler',
+      'Etterbehandling som hindrer gjenvekst',
+    ]}
+    imagePlaceholder="Bilde: Ren fasade etter vask"
+    whyHeading="Hvorfor vaske fasaden?"
+    whyCards={[
+      { title: 'Beskytter mot fukt', text: 'Alger og mose holder på fukt som kan trenge inn i fasadematerialet og føre til råte og frostskader.' },
+      { title: 'Bedre førsteinntrykk', text: 'En ren fasade gir et positivt inntrykk og viser at boligen er godt vedlikeholdt.' },
+      { title: 'Sparer penger', text: 'Regelmessig vask reduserer behovet for kostbar fasaderehabilitering og maling.' },
+    ]}
+  />
+
+  <CtaBanner heading="Gi fasaden en ny start" text="Vi gir deg et gratis og uforpliktende tilbud på fasadevask." />
+
+</Layout>

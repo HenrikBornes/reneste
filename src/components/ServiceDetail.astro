@@ -1,0 +1,47 @@
+---
+interface Props {
+  heading: string;
+  intro: string;
+  items: string[];
+  imagePlaceholder: string;
+  whyHeading: string;
+  whyCards: { title: string; text: string }[];
+}
+
+const { heading, intro, items, imagePlaceholder, whyHeading, whyCards } = Astro.props;
+---
+
+<section class="service-detail">
+  <div class="container">
+    <div class="detail-grid">
+      <div class="detail-content">
+        <h2>{heading}</h2>
+        <p>{intro}</p>
+        <ul class="detail-list">
+          {items.map(item => <li>{item}</li>)}
+        </ul>
+        <a href="/tilbud" class="btn btn-primary">Få tilbud →</a>
+      </div>
+      <div class="detail-image">
+        {imagePlaceholder}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="why-section">
+  <div class="container">
+    <div style="text-align:center;">
+      <p class="section-label">Derfor er det viktig</p>
+      <h2>{whyHeading}</h2>
+    </div>
+    <div class="why-grid">
+      {whyCards.map(card => (
+        <div class="why-card fade-in">
+          <h3>{card.title}</h3>
+          <p>{card.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
