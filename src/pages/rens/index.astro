@@ -1,0 +1,23 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import CtaBanner from '../../components/CtaBanner.astro';
+---
+
+<Layout title="Rens – Reneste" description="Ventilasjonsrens og varmepumperens for bedre inneklima og lavere energikostnader." activePage="rens">
+
+  <PageHeader label="Renstjenester" heading="Rens" text="Bedre inneklima og lavere energikostnader med profesjonell rens av ventilasjon og varmepumpe." />
+
+  <section class="services-overview">
+    <div class="container">
+      <div class="services-grid">
+        <ServiceCard icon="💨" title="Ventilasjonsrens" description="Grundig rens av ventilasjonskanaler for bedre inneklima, lavere energiforbruk og redusert brannfare." href="/rens/ventilasjonsrens" />
+        <ServiceCard icon="❄️" title="Varmepumperens" description="Profesjonell rengjøring av varmepumpe for optimal ytelse og lengre levetid." href="/rens/varmepumperens" comingSoon={true} />
+      </div>
+    </div>
+  </section>
+
+  <CtaBanner heading="Vil du puste friskere?" text="Få et gratis tilbud på rens av ventilasjon eller varmepumpe." />
+
+</Layout>

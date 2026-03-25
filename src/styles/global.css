@@ -206,6 +206,92 @@ section {
   width: 100%;
 }
 
+/* ---------- Desktop Dropdown Nav ---------- */
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown-trigger {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--dark);
+  transition: var(--transition);
+  cursor: pointer;
+  position: relative;
+}
+
+.nav-dropdown-trigger:hover,
+.nav-dropdown-trigger.active {
+  color: var(--accent);
+}
+
+.nav-dropdown-trigger::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  transition: var(--transition);
+}
+
+.nav-dropdown-trigger:hover::after,
+.nav-dropdown-trigger.active::after {
+  width: 100%;
+}
+
+.nav-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--white);
+  border: 1px solid var(--light-gray);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+  padding: 0.5rem 0;
+  min-width: 200px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  z-index: 1001;
+}
+
+/* Invisible bridge so cursor can move from trigger to menu */
+.nav-dropdown-menu::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 0;
+  right: 0;
+  height: 12px;
+}
+
+.nav-dropdown:hover .nav-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+}
+
+.nav-dropdown-menu a {
+  display: block;
+  padding: 0.6rem 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--dark);
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.nav-dropdown-menu a::after {
+  display: none;
+}
+
+.nav-dropdown-menu a:hover {
+  background: var(--accent-light);
+  color: var(--accent);
+}
+
 .header-cta {
   margin-left: 1rem;
 }
@@ -870,6 +956,56 @@ section {
 
 .mobile-nav a:last-child {
   border-bottom: none;
+}
+
+/* ---------- Mobile Nav Accordion ---------- */
+.mobile-nav-group {
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.mobile-nav-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.75rem 0;
+  font-size: 1.05rem;
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--dark);
+}
+
+.mobile-nav-arrow {
+  transition: transform 0.25s ease;
+  font-size: 0.8rem;
+}
+
+.mobile-nav-group.open .mobile-nav-arrow {
+  transform: rotate(180deg);
+}
+
+.mobile-nav-sub {
+  display: none;
+  padding-left: 1rem;
+  padding-bottom: 0.5rem;
+}
+
+.mobile-nav-group.open .mobile-nav-sub {
+  display: block;
+}
+
+.mobile-nav-sub a {
+  padding: 0.5rem 0;
+  font-size: 0.95rem;
+  border-bottom: none;
+  color: #4a5568;
+}
+
+.mobile-nav-sub a:hover {
+  color: var(--accent);
 }
 
 /* ---------- Animations ---------- */

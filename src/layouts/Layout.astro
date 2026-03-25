@@ -26,7 +26,30 @@ const { title, description = 'Reneste tilbyr profesjonell takvask, fasadevask og
       <a href="/" class="logo">Ren<span>este</span></a>
       <nav class="nav-links">
         <a href="/" class:list={[{ active: activePage === 'hjem' }]}>Hjem</a>
-        <a href="/tjenester" class:list={[{ active: activePage === 'tjenester' }]}>Tjenester</a>
+        <div class="nav-dropdown">
+          <a href="/tak" class:list={['nav-dropdown-trigger', { active: activePage === 'tak' }]}>Tak</a>
+          <div class="nav-dropdown-menu">
+            <a href="/tak/takvask">Takvask</a>
+            <a href="/tak/takrennevask">Takrennevask</a>
+            <a href="/tak/algebehandling">Algebehandling</a>
+          </div>
+        </div>
+        <div class="nav-dropdown">
+          <a href="/fasade" class:list={['nav-dropdown-trigger', { active: activePage === 'fasade' }]}>Fasade</a>
+          <div class="nav-dropdown-menu">
+            <a href="/fasade/fasadevask">Fasadevask</a>
+            <a href="/fasade/vindusvask">Vindusvask</a>
+            <a href="/fasade/algebehandling">Algebehandling</a>
+            <a href="/fasade/tagging">Tagging-fjerning</a>
+          </div>
+        </div>
+        <div class="nav-dropdown">
+          <a href="/rens" class:list={['nav-dropdown-trigger', { active: activePage === 'rens' }]}>Rens</a>
+          <div class="nav-dropdown-menu">
+            <a href="/rens/ventilasjonsrens">Ventilasjonsrens</a>
+            <a href="/rens/varmepumperens">Varmepumperens</a>
+          </div>
+        </div>
         <a href="/kontakt" class:list={[{ active: activePage === 'kontakt' }]}>Kontakt</a>
       </nav>
       <a href="/tilbud" class="btn btn-primary header-cta">Få tilbud</a>
@@ -38,7 +61,33 @@ const { title, description = 'Reneste tilbyr profesjonell takvask, fasadevask og
 
   <nav class="mobile-nav">
     <a href="/">Hjem</a>
-    <a href="/tjenester">Tjenester</a>
+    <div class="mobile-nav-group">
+      <button class="mobile-nav-toggle">Tak <span class="mobile-nav-arrow">▾</span></button>
+      <div class="mobile-nav-sub">
+        <a href="/tak">Oversikt</a>
+        <a href="/tak/takvask">Takvask</a>
+        <a href="/tak/takrennevask">Takrennevask</a>
+        <a href="/tak/algebehandling">Algebehandling</a>
+      </div>
+    </div>
+    <div class="mobile-nav-group">
+      <button class="mobile-nav-toggle">Fasade <span class="mobile-nav-arrow">▾</span></button>
+      <div class="mobile-nav-sub">
+        <a href="/fasade">Oversikt</a>
+        <a href="/fasade/fasadevask">Fasadevask</a>
+        <a href="/fasade/vindusvask">Vindusvask</a>
+        <a href="/fasade/algebehandling">Algebehandling</a>
+        <a href="/fasade/tagging">Tagging-fjerning</a>
+      </div>
+    </div>
+    <div class="mobile-nav-group">
+      <button class="mobile-nav-toggle">Rens <span class="mobile-nav-arrow">▾</span></button>
+      <div class="mobile-nav-sub">
+        <a href="/rens">Oversikt</a>
+        <a href="/rens/ventilasjonsrens">Ventilasjonsrens</a>
+        <a href="/rens/varmepumperens">Varmepumperens</a>
+      </div>
+    </div>
     <a href="/kontakt">Kontakt</a>
     <a href="/tilbud">Få tilbud</a>
   </nav>
@@ -53,18 +102,19 @@ const { title, description = 'Reneste tilbyr profesjonell takvask, fasadevask og
           <p>Profesjonell utvendig rengjøring for boliger i hele Norge. Trygt, effektivt og med garanti.</p>
         </div>
         <div>
-          <h4>Tjenester</h4>
+          <h4>Tak</h4>
           <ul>
-            <li><a href="/tjenester/takvask">Takvask</a></li>
-            <li><a href="/tjenester/fasadevask">Fasadevask</a></li>
-            <li><a href="/tjenester/ventilasjonsrens">Ventilasjonsrens</a></li>
+            <li><a href="/tak/takvask">Takvask</a></li>
+            <li><a href="/tak/takrennevask">Takrennevask</a></li>
+            <li><a href="/tak/algebehandling">Algebehandling</a></li>
           </ul>
         </div>
         <div>
-          <h4>Selskap</h4>
+          <h4>Fasade</h4>
           <ul>
-            <li><a href="/kontakt">Kontakt</a></li>
-            <li><a href="/tilbud">Få tilbud</a></li>
+            <li><a href="/fasade/fasadevask">Fasadevask</a></li>
+            <li><a href="/fasade/vindusvask">Vindusvask</a></li>
+            <li><a href="/fasade/tagging">Tagging-fjerning</a></li>
           </ul>
         </div>
         <div>
@@ -72,6 +122,8 @@ const { title, description = 'Reneste tilbyr profesjonell takvask, fasadevask og
           <ul>
             <li>post@reneste.no</li>
             <li>+47 XXX XX XXX</li>
+            <li><a href="/kontakt">Kontaktskjema</a></li>
+            <li><a href="/tilbud">Få tilbud</a></li>
           </ul>
         </div>
       </div>
@@ -117,6 +169,14 @@ const { title, description = 'Reneste tilbyr profesjonell takvask, fasadevask og
         });
       });
     }
+
+    // Mobile nav accordions
+    document.querySelectorAll('.mobile-nav-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const group = btn.parentElement;
+        if (group) group.classList.toggle('open');
+      });
+    });
 
     // Scroll animations
     const fadeElements = document.querySelectorAll('.fade-in');

@@ -1,0 +1,33 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import ServiceDetail from '../../components/ServiceDetail.astro';
+import CtaBanner from '../../components/CtaBanner.astro';
+---
+
+<Layout title="Takrennevask – Reneste" description="Profesjonell rens av takrenner og nedløp. Forhindrer vannskader og oversvømmelse." activePage="tak">
+
+  <PageHeader label="Tak" heading="Takrennevask" text="Rene takrenner beskytter boligen mot fuktskader og kostbare reparasjoner." />
+
+  <ServiceDetail
+    heading="Hva vi gjør"
+    intro="Takrenner og nedløp tettes gradvis av løv, mose, barnåler og annet organisk materiale. Når vannet ikke renner fritt, kan det føre til oversvømmelse, fuktskader på fasade og grunnmur. Vi sørger for at alt fungerer som det skal."
+    items={[
+      'Fjerning av løv, mose og avleiringer',
+      'Spyling av nedløp for å fjerne blokkeringer',
+      'Kontroll av fall og feste',
+      'Inspeksjon av beslag og overganger',
+      'Ettersyn av rennebeslag og pakninger',
+    ]}
+    imagePlaceholder="Bilde: Rens av takrenne"
+    whyHeading="Hvorfor rense takrenner?"
+    whyCards={[
+      { title: 'Forhindrer vannskader', text: 'Tette takrenner fører til at vann renner over og kan trenge inn i vegg, tak eller grunnmur.' },
+      { title: 'Unngår frostsprengning', text: 'Vann som blir stående i rennene om vinteren kan fryse og sprenge renner og nedløp.' },
+      { title: 'Billig forsikring', text: 'En enkel rens et par ganger i året kan spare deg for titusener i reparasjonskostnader.' },
+    ]}
+  />
+
+  <CtaBanner heading="Sikre takrennene før det er for sent" text="Vi gir deg et gratis og uforpliktende tilbud på takrennevask." />
+
+</Layout>

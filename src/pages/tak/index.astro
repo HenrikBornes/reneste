@@ -1,0 +1,24 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import CtaBanner from '../../components/CtaBanner.astro';
+---
+
+<Layout title="Taktjenester – Reneste" description="Profesjonelle taktjenester: takvask, takrennevask og algebehandling. Gratis befaring." activePage="tak">
+
+  <PageHeader label="Taktjenester" heading="Tak" text="Vi holder taket ditt rent, fritt for mose og alger – og forlenger levetiden med mange år." />
+
+  <section class="services-overview">
+    <div class="container">
+      <div class="services-grid">
+        <ServiceCard icon="🏠" title="Takvask" description="Grundig fjerning av mose, alger og smuss. Skånsom behandling tilpasset din taktype." href="/tak/takvask" />
+        <ServiceCard icon="🪣" title="Takrennevask" description="Rens av takrenner og nedløp for å hindre vannskader og oversvømmelse." href="/tak/takrennevask" />
+        <ServiceCard icon="🧬" title="Algebehandling" description="Biologisk behandling som fjerner og forhindrer gjenvekst av alger og mose på taket." href="/tak/algebehandling" />
+      </div>
+    </div>
+  </section>
+
+  <CtaBanner heading="Usikker på hva taket trenger?" text="Vi kommer gjerne på en gratis befaring og gir deg et uforpliktende tilbud." />
+
+</Layout>

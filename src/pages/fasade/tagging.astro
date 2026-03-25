@@ -1,0 +1,33 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import ServiceDetail from '../../components/ServiceDetail.astro';
+import CtaBanner from '../../components/CtaBanner.astro';
+---
+
+<Layout title="Tagging-fjerning – Reneste" description="Profesjonell fjerning av graffiti og tagging fra fasader. Skånsomt og effektivt." activePage="fasade">
+
+  <PageHeader label="Fasade" heading="Tagging-fjerning" text="Skånsom og effektiv fjerning av graffiti og tagging fra alle typer overflater." />
+
+  <ServiceDetail
+    heading="Hva vi gjør"
+    intro="Graffiti og tagging er et vanlig problem – spesielt i byer og tettsteder. Vi fjerner uønsket maling fra mur, betong, tre, metall og andre materialer med metoder tilpasset overflaten, slik at fasaden ser ren ut uten skader."
+    items={[
+      'Fjerning fra mur, betong, tre og metall',
+      'Spesialmidler tilpasset overflate og malingtype',
+      'Skånsom behandling som bevarer underliggende materiale',
+      'Ettervask for et rent og jevnt resultat',
+      'Anti-graffiti-behandling som gjør fremtidig fjerning enklere (valgfritt)',
+    ]}
+    imagePlaceholder="Bilde: Før og etter tagging-fjerning"
+    whyHeading="Hvorfor fjerne tagging raskt?"
+    whyCards={[
+      { title: 'Bevarer boligverdien', text: 'Tagging gir et dårlig inntrykk og kan senke verdien på eiendommen. Rask fjerning er viktig.' },
+      { title: 'Enklere jo raskere', text: 'Fjerning er enklest når malingen er fersk. Over tid kan den etse seg inn i overflaten.' },
+      { title: 'Forebygg med coating', text: 'Anti-graffiti-behandling gjør at fremtidig tagging kan vaskes bort enkelt med vann.' },
+    ]}
+  />
+
+  <CtaBanner heading="Trenger du hjelp med tagging?" text="Vi gir deg et gratis og uforpliktende tilbud på fjerning." />
+
+</Layout>

@@ -1,0 +1,34 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import ServiceDetail from '../../components/ServiceDetail.astro';
+import CtaBanner from '../../components/CtaBanner.astro';
+---
+
+<Layout title="Algebehandling tak – Reneste" description="Biologisk algebehandling av tak. Fjerner mose og alger og hindrer gjenvekst i opptil 5 år." activePage="tak">
+
+  <PageHeader label="Tak" heading="Algebehandling" text="Biologisk behandling som fjerner og forhindrer gjenvekst av alger og mose på taket." />
+
+  <ServiceDetail
+    heading="Hva vi gjør"
+    intro="Algebehandling er en skånsom og langvarig løsning for tak med mose- og algevekst. Vi påfører et biologisk middel som dreper veksten i roten og hindrer gjenvekst i flere år – uten høytrykk som kan skade taksteinen."
+    items={[
+      'Påføring av biologisk algebehandling',
+      'Virker gradvis – mose og alger dør og løsner naturlig',
+      'Ingen skadelig høytrykk nødvendig',
+      'Langvarig effekt – opptil 3–5 år',
+      'Miljøvennlige og godkjente midler',
+      'Kan kombineres med takvask for umiddelbart resultat',
+    ]}
+    imagePlaceholder="Bilde: Tak med algebehandling"
+    whyHeading="Hvorfor algebehandling?"
+    whyCards={[
+      { title: 'Skånsomt for taket', text: 'Ingen høytrykk betyr ingen risiko for å skade takstein, beslag eller fuger.' },
+      { title: 'Langvarig effekt', text: 'Behandlingen virker i opptil 5 år, noe som gjør det til en svært kostnadseffektiv løsning.' },
+      { title: 'Forebygger skader', text: 'Ved å fjerne mose og alger tidlig unngår du fuktskader og dyr reparasjon.' },
+    ]}
+  />
+
+  <CtaBanner heading="Gi taket langvarig beskyttelse" text="Få et gratis tilbud på algebehandling av taket ditt." />
+
+</Layout>

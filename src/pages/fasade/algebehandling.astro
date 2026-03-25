@@ -1,0 +1,34 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import ServiceDetail from '../../components/ServiceDetail.astro';
+import CtaBanner from '../../components/CtaBanner.astro';
+---
+
+<Layout title="Algebehandling fasade – Reneste" description="Biologisk algebehandling av fasade. Fjerner grønnbelegg og hindrer gjenvekst." activePage="fasade">
+
+  <PageHeader label="Fasade" heading="Algebehandling" text="Biologisk behandling som fjerner grønnbelegg og hindrer gjenvekst på fasaden." />
+
+  <ServiceDetail
+    heading="Hva vi gjør"
+    intro="Grønnbelegg på fasaden er ikke bare stygt – det holder på fukt og kan føre til råteskader. Vår algebehandling er en skånsom løsning som fjerner veksten biologisk, uten aggressiv høytrykk som kan skade overflaten."
+    items={[
+      'Biologisk behandling av alle fasadetyper',
+      'Fjerner grønske, alger og mose effektivt',
+      'Skånsomt – ingen skade på maling eller puss',
+      'Langvarig beskyttelse mot gjenvekst',
+      'Miljøvennlige og godkjente midler',
+      'Kan kombineres med fasadevask for best resultat',
+    ]}
+    imagePlaceholder="Bilde: Fasade med algebehandling"
+    whyHeading="Hvorfor algebehandling av fasade?"
+    whyCards={[
+      { title: 'Forhindrer råte', text: 'Alger og mose holder på fukt som kan føre til råteskader i treverk og puss.' },
+      { title: 'Slipper å male oftere', text: 'En ren fasade holder lenger, og du utsetter behovet for kostbar maling og vedlikehold.' },
+      { title: 'Langvarig effekt', text: 'Biologisk behandling virker i flere år og gir en varig løsning mot grønnbelegg.' },
+    ]}
+  />
+
+  <CtaBanner heading="Kvitt deg med grønnbelegg" text="Få et gratis tilbud på algebehandling av fasaden." />
+
+</Layout>

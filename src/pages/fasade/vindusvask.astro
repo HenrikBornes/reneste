@@ -1,0 +1,33 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import ServiceDetail from '../../components/ServiceDetail.astro';
+import CtaBanner from '../../components/CtaBanner.astro';
+---
+
+<Layout title="Vindusvask – Reneste" description="Profesjonell vindusvask for private boliger. Grundig vask av glass, karmer og rammer." activePage="fasade">
+
+  <PageHeader label="Fasade" heading="Vindusvask" text="Krystallklare vinduer og rene karmer – for mer lys og et penere uttrykk." />
+
+  <ServiceDetail
+    heading="Hva vi gjør"
+    intro="Skitne vinduer påvirker både inntrykket og trivsel. Vi vasker alle vinduer grundig – både glass, karmer og rammer – med profesjonelt utstyr som gir et stripefrittresultat uten skjolder."
+    items={[
+      'Vask av alle vinduer – innvendig og utvendig',
+      'Rens av vinduskarmer og rammer',
+      'Stripefritt resultat med profesjonelt utstyr',
+      'Vask av vanskelig tilgjengelige vinduer med teleskopstang',
+      'Kan kombineres med fasadevask',
+    ]}
+    imagePlaceholder="Bilde: Rene vinduer"
+    whyHeading="Hvorfor profesjonell vindusvask?"
+    whyCards={[
+      { title: 'Mer dagslys', text: 'Rene vinduer slipper inn betydelig mer lys, noe som gir bedre trivsel og lavere strømforbruk.' },
+      { title: 'Bevarer vinduene', text: 'Smuss og forurensning kan etse seg inn i glasset over tid. Regelmessig vask forlenger levetiden.' },
+      { title: 'Spar tid', text: 'La oss ta jobben – vi har riktig utstyr og gjør det raskere og grundigere enn de fleste klarer selv.' },
+    ]}
+  />
+
+  <CtaBanner heading="Klart for klarere utsikt?" text="Få et gratis og uforpliktende tilbud på vindusvask." />
+
+</Layout>

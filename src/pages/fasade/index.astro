@@ -1,0 +1,25 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import CtaBanner from '../../components/CtaBanner.astro';
+---
+
+<Layout title="Fasadetjenester – Reneste" description="Profesjonell fasadevask, vindusvask, algebehandling og tagging-fjerning." activePage="fasade">
+
+  <PageHeader label="Fasadetjenester" heading="Fasade" text="Gi boligen et friskt uttrykk med profesjonell vask og behandling av fasaden." />
+
+  <section class="services-overview">
+    <div class="container">
+      <div class="services-grid">
+        <ServiceCard icon="🧱" title="Fasadevask" description="Profesjonell vask av tre, mur, betong og andre fasadematerialer." href="/fasade/fasadevask" />
+        <ServiceCard icon="🪟" title="Vindusvask" description="Grundig vask av vinduer og karmer – for et klart og rent resultat." href="/fasade/vindusvask" />
+        <ServiceCard icon="🧬" title="Algebehandling" description="Biologisk behandling som fjerner grønnbelegg og hindrer gjenvekst på fasaden." href="/fasade/algebehandling" />
+        <ServiceCard icon="🎨" title="Tagging-fjerning" description="Skånsom fjerning av graffiti og tagging fra alle typer fasadematerialer." href="/fasade/tagging" />
+      </div>
+    </div>
+  </section>
+
+  <CtaBanner heading="Trenger fasaden en oppfriskning?" text="Vi gir deg et gratis og uforpliktende tilbud." />
+
+</Layout>
