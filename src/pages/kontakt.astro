@@ -24,15 +24,23 @@ import PageHeader from '../components/PageHeader.astro';
               <input type="tel" id="phone" name="phone" placeholder="XXX XX XXX" required>
             </div>
             <div class="form-group">
-              <label for="address">Adresse</label>
-              <input type="text" id="address" name="address" placeholder="Gateadresse, postnummer">
+              <label for="contactAddress">Adresse</label>
+              <div class="address-autocomplete">
+                <input type="text" id="contactAddress" name="address" placeholder="Begynn å skrive adressen din..." autocomplete="off">
+                <div class="address-dropdown" id="contactDropdown"></div>
+              </div>
             </div>
             <div class="form-group">
               <label for="subject">Hva gjelder det?</label>
               <select id="subject" name="subject">
                 <option value="">Velg tjeneste</option>
                 <option value="takvask">Takvask</option>
+                <option value="takrennevask">Takrennevask</option>
+                <option value="algebehandling-tak">Algebehandling (tak)</option>
                 <option value="fasadevask">Fasadevask</option>
+                <option value="vindusvask">Vindusvask</option>
+                <option value="algebehandling-fasade">Algebehandling (fasade)</option>
+                <option value="tagging">Tagging-fjerning</option>
                 <option value="ventilasjonsrens">Ventilasjonsrens</option>
                 <option value="annet">Annet</option>
               </select>
@@ -65,8 +73,8 @@ import PageHeader from '../components/PageHeader.astro';
               <div><strong>Åpningstider</strong><br>Man–fre: 08:00–16:00</div>
             </div>
           </div>
-          <div class="map-placeholder">
-            Kart (Google Maps embed her)
+          <div class="map-placeholder" id="contactMap">
+            Kart laster...
           </div>
         </div>
 
@@ -76,13 +84,179 @@ import PageHeader from '../components/PageHeader.astro';
 
 </Layout>
 
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<style>
+  .address-autocomplete {
+    position: relative;
+  }
+
+  .address-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--white);
+    border: 1px solid var(--light-gray);
+    border-top: none;
+    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+    box-shadow: var(--shadow-md);
+    z-index: 100;
+    display: none;
+    max-height: 280px;
+    overflow-y: auto;
+  }
+
+  .address-dropdown.open {
+    display: block;
+  }
+
+  .address-option {
+    padding: 0.7rem 1rem;
+    cursor: pointer;
+    transition: background 0.15s;
+    border-bottom: 1px solid var(--off-white);
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .address-option:last-child {
+    border-bottom: none;
+  }
+
+  .address-option:hover {
+    background: var(--accent-light);
+  }
+
+  .address-option .addr-main {
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .address-option .addr-detail {
+    font-size: 0.78rem;
+    color: var(--mid-gray);
+  }
+
+  .map-placeholder {
+    height: 280px;
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .map-placeholder :global(.leaflet-container) {
+    height: 100%;
+    width: 100%;
+    border-radius: var(--radius);
+  }
+</style>
+
 <script>
+  let debounceTimer: ReturnType<typeof setTimeout>;
+  let L: any = null;
+  let map: any = null;
+  let marker: any = null;
+
+  const addressInput = document.getElementById('contactAddress') as HTMLInputElement;
+  const dropdown = document.getElementById('contactDropdown')!;
+
+  // --- Kartverket address autocomplete ---
+  addressInput?.addEventListener('input', () => {
+    clearTimeout(debounceTimer);
+    const q = addressInput.value.trim();
+    if (q.length < 2) { dropdown.classList.remove('open'); return; }
+    debounceTimer = setTimeout(() => searchAddress(q), 250);
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!(e.target as Element).closest('.address-autocomplete')) {
+      dropdown.classList.remove('open');
+    }
+  });
+
+  async function searchAddress(query: string) {
+    try {
+      const url = `https://ws.geonorge.no/adresser/v1/sok?sok=${encodeURIComponent(query)}&fuzzy=true&treffPerSide=6&asciiKompatibel=true`;
+      const res = await fetch(url);
+      const data = await res.json();
+
+      if (!data.adresser || data.adresser.length === 0) {
+        dropdown.innerHTML = '<div class="address-option"><span class="addr-main">Ingen treff</span></div>';
+        dropdown.classList.add('open');
+        return;
+      }
+
+      dropdown.innerHTML = data.adresser.map((addr: any) => {
+        const main = addr.adressetekst || '';
+        const post = `${addr.postnummer || ''} ${addr.poststed || ''}`;
+        const kommune = addr.kommunenavn || '';
+        const lat = addr.representasjonspunkt?.lat;
+        const lon = addr.representasjonspunkt?.lon;
+        return `
+          <div class="address-option" data-lat="${lat}" data-lon="${lon}" data-address="${main}, ${post}">
+            <span class="addr-main">${main}</span>
+            <span class="addr-detail">${post} – ${kommune}</span>
+          </div>
+        `;
+      }).join('');
+
+      dropdown.classList.add('open');
+
+      dropdown.querySelectorAll('.address-option').forEach(opt => {
+        opt.addEventListener('click', () => {
+          const el = opt as HTMLElement;
+          const lat = parseFloat(el.dataset.lat || '0');
+          const lon = parseFloat(el.dataset.lon || '0');
+          const address = el.dataset.address || '';
+          addressInput.value = address;
+          dropdown.classList.remove('open');
+          showOnMap(lat, lon);
+        });
+      });
+    } catch { /* ignore */ }
+  }
+
+  // --- Leaflet map ---
+  async function loadLeaflet(): Promise<void> {
+    if ((window as any).L) { L = (window as any).L; return; }
+    return new Promise((resolve) => {
+      const s = document.createElement('script');
+      s.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+      s.onload = () => { L = (window as any).L; resolve(); };
+      document.head.appendChild(s);
+    });
+  }
+
+  async function initMap() {
+    await loadLeaflet();
+    const mapEl = document.getElementById('contactMap')!;
+    mapEl.innerHTML = '';
+
+    map = L.map(mapEl).setView([59.9139, 10.7522], 5);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap',
+      maxZoom: 19,
+    }).addTo(map);
+  }
+
+  async function showOnMap(lat: number, lon: number) {
+    if (!map) await initMap();
+    map.setView([lat, lon], 16);
+    if (marker) map.removeLayer(marker);
+    marker = L.marker([lat, lon]).addTo(map);
+  }
+
+  // Init map on load
+  initMap();
+
+  // --- Form submit ---
   const contactForm = document.getElementById('contactForm');
   if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
       e.preventDefault();
       alert('Takk for din henvendelse! Vi tar kontakt snart.');
-      contactForm.reset();
+      (contactForm as HTMLFormElement).reset();
     });
   }
 </script>

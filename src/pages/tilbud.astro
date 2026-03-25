@@ -34,7 +34,10 @@ import PageHeader from '../components/PageHeader.astro';
             <p>Oppgi adressen din slik at vi kan gi et mer presist estimat.</p>
             <div class="form-group">
               <label for="quoteAddress">Adresse</label>
-              <input type="text" id="quoteAddress" placeholder="F.eks. Storgata 1, 0182 Oslo">
+              <div class="address-autocomplete">
+                <input type="text" id="quoteAddress" placeholder="Begynn å skrive adressen din..." autocomplete="off">
+                <div class="address-dropdown" id="quoteDropdown"></div>
+              </div>
             </div>
             <div class="form-group">
               <label>Hvilken tjeneste er du interessert i?</label>
@@ -85,6 +88,7 @@ import PageHeader from '../components/PageHeader.astro';
               <div class="option-grid">
                 <div class="option-card" data-field="taktype" data-value="betongstein">Betongstein</div>
                 <div class="option-card" data-field="taktype" data-value="teglstein">Teglstein</div>
+                <div class="option-card" data-field="taktype" data-value="salttak">Salttak</div>
                 <div class="option-card" data-field="taktype" data-value="skifer">Skifer</div>
                 <div class="option-card" data-field="taktype" data-value="annet">Annet / vet ikke</div>
               </div>
@@ -139,7 +143,93 @@ import PageHeader from '../components/PageHeader.astro';
 
 </Layout>
 
+<style>
+  .address-autocomplete {
+    position: relative;
+  }
+
+  .address-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--white);
+    border: 1px solid var(--light-gray);
+    border-top: none;
+    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+    box-shadow: var(--shadow-md);
+    z-index: 100;
+    display: none;
+    max-height: 280px;
+    overflow-y: auto;
+  }
+
+  .address-dropdown.open {
+    display: block;
+  }
+
+  .address-option {
+    padding: 0.7rem 1rem;
+    cursor: pointer;
+    transition: background 0.15s;
+    border-bottom: 1px solid var(--off-white);
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .address-option:last-child { border-bottom: none; }
+  .address-option:hover { background: var(--accent-light); }
+  .address-option .addr-main { font-weight: 600; font-size: 0.9rem; }
+  .address-option .addr-detail { font-size: 0.78rem; color: var(--mid-gray); }
+</style>
+
 <script>
+  // --- Kartverket address autocomplete for tilbud ---
+  {
+    let debounceTimer: ReturnType<typeof setTimeout>;
+    const addrInput = document.getElementById('quoteAddress') as HTMLInputElement;
+    const addrDropdown = document.getElementById('quoteDropdown')!;
+
+    addrInput?.addEventListener('input', () => {
+      clearTimeout(debounceTimer);
+      const q = addrInput.value.trim();
+      if (q.length < 2) { addrDropdown.classList.remove('open'); return; }
+      debounceTimer = setTimeout(() => fetchAddresses(q), 250);
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!(e.target as Element).closest('.address-autocomplete')) {
+        addrDropdown.classList.remove('open');
+      }
+    });
+
+    async function fetchAddresses(query: string) {
+      try {
+        const res = await fetch(`https://ws.geonorge.no/adresser/v1/sok?sok=${encodeURIComponent(query)}&fuzzy=true&treffPerSide=6&asciiKompatibel=true`);
+        const data = await res.json();
+        if (!data.adresser?.length) {
+          addrDropdown.innerHTML = '<div class="address-option"><span class="addr-main">Ingen treff</span></div>';
+          addrDropdown.classList.add('open');
+          return;
+        }
+        addrDropdown.innerHTML = data.adresser.map((a: any) => `
+          <div class="address-option" data-address="${a.adressetekst}, ${a.postnummer} ${a.poststed}">
+            <span class="addr-main">${a.adressetekst}</span>
+            <span class="addr-detail">${a.postnummer} ${a.poststed} – ${a.kommunenavn}</span>
+          </div>
+        `).join('');
+        addrDropdown.classList.add('open');
+        addrDropdown.querySelectorAll('.address-option').forEach(opt => {
+          opt.addEventListener('click', () => {
+            addrInput.value = (opt as HTMLElement).dataset.address || '';
+            addrDropdown.classList.remove('open');
+          });
+        });
+      } catch { /* ignore */ }
+    }
+  }
+
   const quoteCalc = document.querySelector('.quote-calculator');
   if (quoteCalc) {
     let currentStep = 1;
@@ -193,6 +283,7 @@ import PageHeader from '../components/PageHeader.astro';
       else if (state.boligtype === 'leilighet') { low = 3000; high = 6000; }
       else if (state.boligtype === 'hytte') { low = 5000; high = 10000; }
       if (state.taktype === 'betongstein') { low += 1000; high += 2000; }
+      else if (state.taktype === 'salttak') { low += 500; high += 1500; }
       else if (state.taktype === 'skifer') { low += 2000; high += 3000; }
       const el = quoteCalc.querySelector('.price-range');
       if (el) el.textContent = `${low.toLocaleString('nb-NO')} – ${high.toLocaleString('nb-NO')} kr`;
