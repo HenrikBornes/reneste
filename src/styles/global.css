@@ -424,7 +424,11 @@ section {
   align-items: center;
   justify-content: center;
   margin-bottom: 1.25rem;
-  font-size: 1.5rem;
+  color: var(--accent);
+}
+
+.icon-svg {
+  flex-shrink: 0;
 }
 
 .service-card h3 {
@@ -493,7 +497,7 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  color: var(--accent);
 }
 
 .trust-item h3 {
@@ -747,7 +751,7 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  color: var(--accent);
   flex-shrink: 0;
 }
 

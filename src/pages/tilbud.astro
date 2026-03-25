@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageHeader from '../components/PageHeader.astro';
+import Icon from '../components/Icon.astro';
 ---
 
 <Layout title="Få tilbud – Reneste" description="Få et gratis og uforpliktende tilbud på takvask, fasadevask eller ventilasjonsrens fra Reneste.">
@@ -43,16 +44,16 @@ import PageHeader from '../components/PageHeader.astro';
               <label>Hvilken tjeneste er du interessert i?</label>
               <div class="option-grid">
                 <div class="option-card selected" data-field="tjeneste" data-value="takvask">
-                  <div class="option-icon">🏠</div>Takvask
+                  <div class="option-icon"><Icon name="roof" size={28} /></div>Takvask
                 </div>
                 <div class="option-card" data-field="tjeneste" data-value="fasadevask">
-                  <div class="option-icon">🧱</div>Fasadevask
+                  <div class="option-icon"><Icon name="wall" size={28} /></div>Fasadevask
                 </div>
                 <div class="option-card" data-field="tjeneste" data-value="ventilasjonsrens">
-                  <div class="option-icon">💨</div>Ventilasjon
+                  <div class="option-icon"><Icon name="wind" size={28} /></div>Ventilasjon
                 </div>
                 <div class="option-card" data-field="tjeneste" data-value="flere">
-                  <div class="option-icon">📦</div>Flere tjenester
+                  <div class="option-icon"><Icon name="package" size={28} /></div>Flere tjenester
                 </div>
               </div>
             </div>
@@ -70,16 +71,16 @@ import PageHeader from '../components/PageHeader.astro';
               <label>Type bolig</label>
               <div class="option-grid">
                 <div class="option-card" data-field="boligtype" data-value="enebolig">
-                  <div class="option-icon">🏡</div>Enebolig
+                  <div class="option-icon"><Icon name="house" size={28} /></div>Enebolig
                 </div>
                 <div class="option-card" data-field="boligtype" data-value="rekkehus">
-                  <div class="option-icon">🏘️</div>Rekkehus
+                  <div class="option-icon"><Icon name="townhouse" size={28} /></div>Rekkehus
                 </div>
                 <div class="option-card" data-field="boligtype" data-value="leilighet">
-                  <div class="option-icon">🏢</div>Leilighet
+                  <div class="option-icon"><Icon name="apartment" size={28} /></div>Leilighet
                 </div>
                 <div class="option-card" data-field="boligtype" data-value="hytte">
-                  <div class="option-icon">🏔️</div>Hytte
+                  <div class="option-icon"><Icon name="cabin" size={28} /></div>Hytte
                 </div>
               </div>
             </div>
@@ -134,9 +135,9 @@ import PageHeader from '../components/PageHeader.astro';
       </div>
 
       <div style="display: flex; justify-content: center; gap: 2.5rem; margin-top: 2.5rem; flex-wrap: wrap; color: var(--mid-gray); font-size: 0.9rem;">
-        <span>📋 Gratis befaring</span>
-        <span>✅ Fornøydgaranti</span>
-        <span>⚡ Svar innen 24 timer</span>
+        <span style="display:inline-flex; align-items:center; gap:0.4rem;"><Icon name="clipboard" size={16} /> Gratis befaring</span>
+        <span style="display:inline-flex; align-items:center; gap:0.4rem;"><Icon name="check-circle" size={16} /> Fornøydgaranti</span>
+        <span style="display:inline-flex; align-items:center; gap:0.4rem;"><Icon name="lightning" size={16} /> Svar innen 24 timer</span>
       </div>
     </div>
   </section>

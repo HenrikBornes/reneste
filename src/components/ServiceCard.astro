@@ -1,4 +1,6 @@
 ---
+import Icon from './Icon.astro';
+
 interface Props {
   icon: string;
   title: string;
@@ -8,21 +10,20 @@ interface Props {
 }
 
 const { icon, title, description, href, comingSoon = false } = Astro.props;
-const Tag = href ? 'a' : 'div';
 ---
 
 {href ? (
   <a href={href} class:list={['service-card', 'fade-in', { 'coming-soon': comingSoon }]}>
     {comingSoon && <span class="badge">Kommer snart</span>}
-    <div class="icon">{icon}</div>
+    <div class="icon"><Icon name={icon} size={28} /></div>
     <h3>{title}</h3>
     <p>{description}</p>
-    {href && <span class="card-link">Les mer →</span>}
+    <span class="card-link">Les mer →</span>
   </a>
 ) : (
   <div class:list={['service-card', 'fade-in', { 'coming-soon': comingSoon }]}>
     {comingSoon && <span class="badge">Kommer snart</span>}
-    <div class="icon">{icon}</div>
+    <div class="icon"><Icon name={icon} size={28} /></div>
     <h3>{title}</h3>
     <p>{description}</p>
   </div>

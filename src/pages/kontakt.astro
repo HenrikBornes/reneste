@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageHeader from '../components/PageHeader.astro';
+import Icon from '../components/Icon.astro';
 ---
 
 <Layout title="Kontakt – Reneste" description="Kontakt Reneste for gratis befaring og tilbud på utvendig rengjøring." activePage="kontakt">
@@ -57,19 +58,19 @@ import PageHeader from '../components/PageHeader.astro';
           <div class="contact-info-card">
             <h3>Kontaktinformasjon</h3>
             <div class="contact-info-item">
-              <div class="ci-icon">📞</div>
+              <div class="ci-icon"><Icon name="phone" size={20} /></div>
               <div><strong>Telefon</strong><br>+47 XXX XX XXX</div>
             </div>
             <div class="contact-info-item">
-              <div class="ci-icon">✉️</div>
+              <div class="ci-icon"><Icon name="mail" size={20} /></div>
               <div><strong>E-post</strong><br>post@reneste.no</div>
             </div>
             <div class="contact-info-item">
-              <div class="ci-icon">📍</div>
+              <div class="ci-icon"><Icon name="map-pin" size={20} /></div>
               <div><strong>Område</strong><br>Vi dekker hele ditt nærområde</div>
             </div>
             <div class="contact-info-item">
-              <div class="ci-icon">🕐</div>
+              <div class="ci-icon"><Icon name="clock" size={20} /></div>
               <div><strong>Åpningstider</strong><br>Man–fre: 08:00–16:00</div>
             </div>
           </div>

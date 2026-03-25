@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
 import ServiceCard from '../components/ServiceCard.astro';
 import BeforeAfter from '../components/BeforeAfter.astro';
 import CtaBanner from '../components/CtaBanner.astro';
@@ -39,10 +40,10 @@ import CtaBanner from '../components/CtaBanner.astro';
         <p style="margin:0.75rem auto 0;">Vi hjelper deg med å holde boligen din ren og velholdt – fra tak til grunn.</p>
       </div>
       <div class="services-grid">
-        <ServiceCard icon="🏠" title="Takvask" description="Fjerning av mose, alger og smuss. Skånsom behandling som forlenger takets levetid." href="/tak/takvask" />
-        <ServiceCard icon="🧱" title="Fasadevask" description="Profesjonell vask av alle typer fasader. Gir boligen et friskt og innbydende uttrykk." href="/fasade/fasadevask" />
-        <ServiceCard icon="🪟" title="Vindusvask" description="Krystallklare vinduer og rene karmer – for mer lys og et penere uttrykk." href="/fasade/vindusvask" />
-        <ServiceCard icon="💨" title="Ventilasjonsrens" description="Bedre inneklima og lavere energikostnader med rene ventilasjonskanaler." href="/rens/ventilasjonsrens" />
+        <ServiceCard icon="roof" title="Takvask" description="Fjerning av mose, alger og smuss. Skånsom behandling som forlenger takets levetid." href="/tak/takvask" />
+        <ServiceCard icon="wall" title="Fasadevask" description="Profesjonell vask av alle typer fasader. Gir boligen et friskt og innbydende uttrykk." href="/fasade/fasadevask" />
+        <ServiceCard icon="window" title="Vindusvask" description="Krystallklare vinduer og rene karmer – for mer lys og et penere uttrykk." href="/fasade/vindusvask" />
+        <ServiceCard icon="wind" title="Ventilasjonsrens" description="Bedre inneklima og lavere energikostnader med rene ventilasjonskanaler." href="/rens/ventilasjonsrens" />
       </div>
     </div>
   </section>
@@ -77,17 +78,17 @@ import CtaBanner from '../components/CtaBanner.astro';
       </div>
       <div class="trust-grid fade-in">
         <div class="trust-item">
-          <div class="trust-icon">📋</div>
+          <div class="trust-icon"><Icon name="clipboard" size={28} /></div>
           <h3>Gratis befaring</h3>
           <p>Vi kommer hjem til deg og gir et uforpliktende tilbud – helt gratis.</p>
         </div>
         <div class="trust-item">
-          <div class="trust-icon">✅</div>
+          <div class="trust-icon"><Icon name="check-circle" size={28} /></div>
           <h3>Fornøydgaranti</h3>
           <p>Er du ikke fornøyd, fikser vi det. Ingen spørsmål stilt.</p>
         </div>
         <div class="trust-item">
-          <div class="trust-icon">🛡️</div>
+          <div class="trust-icon"><Icon name="shield" size={28} /></div>
           <h3>Trygge metoder</h3>
           <p>Vi bruker skånsomme og miljøvennlige metoder som tar vare på boligen din.</p>
         </div>
