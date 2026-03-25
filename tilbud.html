@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Få et gratis og uforpliktende tilbud på takvask, fasadevask eller ventilasjonsrens fra Reneste.">
+  <title>Få tilbud – Reneste</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">Ren<span>este</span></a>
+      <nav class="nav-links">
+        <a href="index.html">Hjem</a>
+        <a href="tjenester.html">Tjenester</a>
+        <a href="kontakt.html">Kontakt</a>
+      </nav>
+      <a href="tilbud.html" class="btn btn-primary header-cta">Få tilbud</a>
+      <button class="mobile-toggle" aria-label="Meny">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <nav class="mobile-nav">
+    <a href="index.html">Hjem</a>
+    <a href="tjenester.html">Tjenester</a>
+    <a href="kontakt.html">Kontakt</a>
+    <a href="tilbud.html">Få tilbud</a>
+  </nav>
+
+  <section class="page-header">
+    <div class="container">
+      <p class="section-label">Gratis & uforpliktende</p>
+      <h1>Få tilbud</h1>
+      <p>Svar på noen enkle spørsmål og få et prisestimat med en gang.</p>
+    </div>
+  </section>
+
+  <section class="quote-section">
+    <div class="container">
+      <div class="quote-calculator">
+
+        <!-- Steps indicator -->
+        <div class="quote-steps">
+          <div class="quote-step active" data-step-num="1">
+            <span class="step-num">1</span>
+            <span>Adresse</span>
+          </div>
+          <div class="quote-step" data-step-num="2">
+            <span class="step-num">2</span>
+            <span>Bolig</span>
+          </div>
+          <div class="quote-step" data-step-num="3">
+            <span class="step-num">3</span>
+            <span>Tilbud</span>
+          </div>
+        </div>
+
+        <div class="quote-body">
+
+          <!-- Step 1: Address -->
+          <div class="quote-panel active" data-step="1">
+            <h3>Hvor bor du?</h3>
+            <p>Oppgi adressen din slik at vi kan gi et mer presist estimat.</p>
+            <div class="form-group">
+              <label for="quoteAddress">Adresse</label>
+              <input type="text" id="quoteAddress" placeholder="F.eks. Storgata 1, 0182 Oslo">
+            </div>
+            <div class="form-group">
+              <label>Hvilken tjeneste er du interessert i?</label>
+              <div class="option-grid">
+                <div class="option-card selected" data-field="tjeneste" data-value="takvask">
+                  <div class="option-icon">🏠</div>
+                  Takvask
+                </div>
+                <div class="option-card" data-field="tjeneste" data-value="fasadevask">
+                  <div class="option-icon">🧱</div>
+                  Fasadevask
+                </div>
+                <div class="option-card" data-field="tjeneste" data-value="ventilasjonsrens">
+                  <div class="option-icon">💨</div>
+                  Ventilasjon
+                </div>
+                <div class="option-card" data-field="tjeneste" data-value="flere">
+                  <div class="option-icon">📦</div>
+                  Flere tjenester
+                </div>
+              </div>
+            </div>
+            <div class="quote-nav">
+              <div></div>
+              <button class="btn btn-primary btn-next">Neste →</button>
+            </div>
+          </div>
+
+          <!-- Step 2: Property -->
+          <div class="quote-panel" data-step="2">
+            <h3>Fortell oss om boligen</h3>
+            <p>Dette hjelper oss å gi et bedre estimat.</p>
+            <div class="form-group">
+              <label>Type bolig</label>
+              <div class="option-grid">
+                <div class="option-card" data-field="boligtype" data-value="enebolig">
+                  <div class="option-icon">🏡</div>
+                  Enebolig
+                </div>
+                <div class="option-card" data-field="boligtype" data-value="rekkehus">
+                  <div class="option-icon">🏘️</div>
+                  Rekkehus
+                </div>
+                <div class="option-card" data-field="boligtype" data-value="leilighet">
+                  <div class="option-icon">🏢</div>
+                  Leilighet
+                </div>
+                <div class="option-card" data-field="boligtype" data-value="hytte">
+                  <div class="option-icon">🏔️</div>
+                  Hytte
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Taktype (valgfritt)</label>
+              <div class="option-grid">
+                <div class="option-card" data-field="taktype" data-value="betongstein">
+                  Betongstein
+                </div>
+                <div class="option-card" data-field="taktype" data-value="teglstein">
+                  Teglstein
+                </div>
+                <div class="option-card" data-field="taktype" data-value="skifer">
+                  Skifer
+                </div>
+                <div class="option-card" data-field="taktype" data-value="annet">
+                  Annet / vet ikke
+                </div>
+              </div>
+            </div>
+            <div class="quote-nav">
+              <button class="btn btn-secondary btn-back">← Tilbake</button>
+              <button class="btn btn-primary btn-next">Se estimat →</button>
+            </div>
+          </div>
+
+          <!-- Step 3: Result -->
+          <div class="quote-panel" data-step="3">
+            <div class="quote-result">
+              <p class="section-label">Ditt prisestimat</p>
+              <div class="price-range">6 000 – 12 000 kr</div>
+              <p class="price-note">Estimert pris basert på dine opplysninger. Endelig pris avtales etter befaring.</p>
+
+              <div class="send-form">
+                <h3 style="margin-bottom: 1rem;">Send forespørsel</h3>
+                <form id="quoteForm">
+                  <div class="form-group">
+                    <label for="quoteName">Navn *</label>
+                    <input type="text" id="quoteName" name="name" placeholder="Ditt fulle navn" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="quotePhone">Telefonnummer *</label>
+                    <input type="tel" id="quotePhone" name="phone" placeholder="XXX XX XXX" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="quoteEmail">E-post</label>
+                    <input type="email" id="quoteEmail" name="email" placeholder="din@epost.no">
+                  </div>
+                  <button type="submit" class="btn btn-primary btn-lg" style="width:100%; justify-content:center;">Send forespørsel →</button>
+                </form>
+              </div>
+            </div>
+            <div class="quote-nav" style="margin-top: 1.5rem;">
+              <button class="btn btn-secondary btn-back">← Tilbake</button>
+              <div></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Trust elements below calculator -->
+      <div style="display: flex; justify-content: center; gap: 2.5rem; margin-top: 2.5rem; flex-wrap: wrap; color: var(--mid-gray); font-size: 0.9rem;">
+        <span>📋 Gratis befaring</span>
+        <span>✅ Fornøydgaranti</span>
+        <span>⚡ Svar innen 24 timer</span>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">Ren<span>este</span></a>
+          <p>Profesjonell utvendig rengjøring for boliger i hele Norge.</p>
+        </div>
+        <div>
+          <h4>Tjenester</h4>
+          <ul>
+            <li><a href="tjenester/takvask.html">Takvask</a></li>
+            <li><a href="tjenester/fasadevask.html">Fasadevask</a></li>
+            <li><a href="tjenester/ventilasjonsrens.html">Ventilasjonsrens</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Selskap</h4>
+          <ul>
+            <li><a href="kontakt.html">Kontakt</a></li>
+            <li><a href="tilbud.html">Få tilbud</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Kontakt</h4>
+          <ul>
+            <li>post@reneste.no</li>
+            <li>+47 XXX XX XXX</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 Reneste. Alle rettigheter reservert.</span>
+        <span>Org.nr: XXX XXX XXX</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
