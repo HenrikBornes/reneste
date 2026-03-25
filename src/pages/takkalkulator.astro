@@ -1,0 +1,591 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+---
+
+<Layout title="Takkalkulator – Reneste" description="Beregn størrelsen på taket ditt med satellittkart. Tegn omrisset og få et nøyaktig areal." activePage="tjenester">
+
+  <PageHeader label="Verktøy" heading="Takkalkulator" text="Finn størrelsen på taket ditt ved hjelp av satellittkart. Tegn omrisset og velg takvinkel." />
+
+  <section style="padding: 2rem 0 5rem;">
+    <div class="container">
+
+      <!-- Address search -->
+      <div class="calc-search">
+        <div class="form-group" style="margin-bottom: 0;">
+          <label for="mapAddress">Søk opp adressen din</label>
+          <div class="search-row">
+            <input type="text" id="mapAddress" placeholder="F.eks. Storgata 1, Oslo" />
+            <button id="searchBtn" class="btn btn-primary">Søk</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Map -->
+      <div class="calc-map-wrapper">
+        <div id="map" class="calc-map"></div>
+        <div class="calc-map-toolbar">
+          <button id="drawBtn" class="btn btn-primary btn-sm">Tegn tak-omriss</button>
+          <button id="clearBtn" class="btn btn-secondary btn-sm">Nullstill</button>
+          <span class="toolbar-hint">Klikk på hjørnene av taket for å tegne omrisset</span>
+        </div>
+      </div>
+
+      <!-- Results panel -->
+      <div class="calc-results" id="calcResults" style="display: none;">
+        <div class="calc-results-grid">
+
+          <div class="calc-result-card">
+            <span class="calc-result-label">Grunnflate (fotavtrykk)</span>
+            <span class="calc-result-value" id="footprintArea">–</span>
+          </div>
+
+          <div class="calc-result-card accent">
+            <span class="calc-result-label">Beregnet takflate</span>
+            <span class="calc-result-value" id="roofArea">–</span>
+          </div>
+
+          <div class="calc-result-card">
+            <span class="calc-result-label">Estimert pris takvask</span>
+            <span class="calc-result-value" id="priceEstimate">–</span>
+          </div>
+
+        </div>
+
+        <!-- Pitch selector -->
+        <div class="calc-pitch">
+          <label>Velg takvinkel (helning)</label>
+          <div class="pitch-options" id="pitchOptions">
+            <button class="pitch-btn" data-angle="0">
+              <span class="pitch-icon">⎯</span>
+              <span>Flatt tak<br><small>0°</small></span>
+            </button>
+            <button class="pitch-btn" data-angle="15">
+              <span class="pitch-icon">⟋</span>
+              <span>Slakt<br><small>15°</small></span>
+            </button>
+            <button class="pitch-btn selected" data-angle="25">
+              <span class="pitch-icon">⟋</span>
+              <span>Normal<br><small>25°</small></span>
+            </button>
+            <button class="pitch-btn" data-angle="35">
+              <span class="pitch-icon">⟋</span>
+              <span>Bratt<br><small>35°</small></span>
+            </button>
+            <button class="pitch-btn" data-angle="45">
+              <span class="pitch-icon">⟋</span>
+              <span>Veldig bratt<br><small>45°</small></span>
+            </button>
+          </div>
+          <div class="pitch-explainer">
+            <svg viewBox="0 0 200 100" class="pitch-diagram" id="pitchDiagram">
+              <line x1="10" y1="90" x2="190" y2="90" stroke="#e8ecf1" stroke-width="2"/>
+              <polygon id="pitchTriangle" points="30,85 170,85 170,35" fill="rgba(13,158,110,0.1)" stroke="var(--accent)" stroke-width="2"/>
+              <text x="100" y="75" text-anchor="middle" font-size="12" fill="var(--dark)" id="pitchAngleText">25°</text>
+            </svg>
+            <p>Takflate = grunnflate ÷ cos(vinkel). Brattere tak = større flate.</p>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div style="text-align: center; margin-top: 2rem;">
+          <a href="/tilbud" class="btn btn-primary btn-lg">Få tilbud basert på dette →</a>
+        </div>
+      </div>
+
+      <!-- No API key fallback -->
+      <div id="noApiMessage" class="calc-fallback" style="display: none;">
+        <h3>Manuell kalkulator</h3>
+        <p>Kartfunksjonen er ikke tilgjengelig akkurat nå. Du kan beregne takflaten manuelt:</p>
+        <div class="manual-calc">
+          <div class="form-group">
+            <label for="manualLength">Lengde på tak (meter)</label>
+            <input type="number" id="manualLength" placeholder="F.eks. 12" min="1" step="0.1">
+          </div>
+          <div class="form-group">
+            <label for="manualWidth">Bredde på tak (meter)</label>
+            <input type="number" id="manualWidth" placeholder="F.eks. 8" min="1" step="0.1">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+  .calc-search {
+    max-width: 600px;
+    margin: 0 auto 1.5rem;
+  }
+
+  .search-row {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .search-row input {
+    flex: 1;
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--light-gray);
+    border-radius: var(--radius-sm);
+    font-size: 1rem;
+    font-family: inherit;
+  }
+
+  .search-row input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(13, 158, 110, 0.12);
+  }
+
+  .calc-map-wrapper {
+    border: 1px solid var(--light-gray);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+
+  .calc-map {
+    width: 100%;
+    height: 500px;
+    background: var(--off-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--mid-gray);
+  }
+
+  .calc-map-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: var(--off-white);
+    border-top: 1px solid var(--light-gray);
+  }
+
+  .toolbar-hint {
+    font-size: 0.85rem;
+    color: var(--mid-gray);
+    margin-left: auto;
+  }
+
+  .btn-sm {
+    padding: 0.5rem 1.25rem;
+    font-size: 0.85rem;
+  }
+
+  .calc-results {
+    background: var(--white);
+    border: 1px solid var(--light-gray);
+    border-radius: var(--radius);
+    padding: 2rem;
+  }
+
+  .calc-results-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .calc-result-card {
+    text-align: center;
+    padding: 1.5rem;
+    border-radius: var(--radius-sm);
+    background: var(--off-white);
+    border: 1px solid var(--light-gray);
+  }
+
+  .calc-result-card.accent {
+    background: var(--accent-light);
+    border-color: var(--accent);
+  }
+
+  .calc-result-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--mid-gray);
+    margin-bottom: 0.5rem;
+  }
+
+  .calc-result-card.accent .calc-result-label {
+    color: var(--accent-dark);
+  }
+
+  .calc-result-value {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--dark);
+  }
+
+  .calc-result-card.accent .calc-result-value {
+    color: var(--accent-dark);
+  }
+
+  .calc-pitch {
+    margin-top: 1.5rem;
+  }
+
+  .calc-pitch > label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+
+  .pitch-options {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+
+  .pitch-btn {
+    flex: 1;
+    min-width: 100px;
+    padding: 0.75rem 0.5rem;
+    border: 2px solid var(--light-gray);
+    border-radius: var(--radius-sm);
+    background: var(--white);
+    cursor: pointer;
+    text-align: center;
+    transition: var(--transition);
+    font-family: inherit;
+    font-size: 0.85rem;
+  }
+
+  .pitch-btn:hover {
+    border-color: var(--accent);
+  }
+
+  .pitch-btn.selected {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .pitch-icon {
+    display: block;
+    font-size: 1.25rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .pitch-btn small {
+    color: var(--mid-gray);
+    font-weight: 600;
+  }
+
+  .pitch-explainer {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem;
+    background: var(--off-white);
+    border-radius: var(--radius-sm);
+  }
+
+  .pitch-diagram {
+    width: 160px;
+    height: 80px;
+    flex-shrink: 0;
+  }
+
+  .pitch-explainer p {
+    font-size: 0.85rem;
+    color: var(--mid-gray);
+  }
+
+  .calc-fallback {
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 3rem 2rem;
+    background: var(--off-white);
+    border-radius: var(--radius);
+  }
+
+  .calc-fallback h3 {
+    margin-bottom: 0.5rem;
+  }
+
+  .calc-fallback p {
+    margin: 0 auto 1.5rem;
+  }
+
+  .manual-calc {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    text-align: left;
+  }
+
+  @media (max-width: 768px) {
+    .calc-results-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .pitch-options {
+      flex-direction: column;
+    }
+
+    .pitch-btn {
+      min-width: auto;
+    }
+
+    .pitch-explainer {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .search-row {
+      flex-direction: column;
+    }
+
+    .calc-map {
+      height: 350px;
+    }
+
+    .manual-calc {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  // ============================================
+  // Roof Calculator – Google Maps Integration
+  // ============================================
+
+  const GOOGLE_MAPS_API_KEY = ''; // <-- Sett inn din API-nøkkel her
+  const PRICE_PER_SQM = 80; // kr per m² for takvask
+
+  let map;
+  let drawingManager;
+  let currentPolygon = null;
+  let currentPitchAngle = 25;
+  let footprintSqm = 0;
+
+  // Initialize
+  function initApp() {
+    if (GOOGLE_MAPS_API_KEY) {
+      loadGoogleMaps();
+    } else {
+      showFallback();
+    }
+
+    setupPitchButtons();
+  }
+
+  // Load Google Maps script dynamically
+  function loadGoogleMaps() {
+    const script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=drawing,geometry,places&callback=initMap`;
+    script.async = true;
+    script.defer = true;
+    document.head.appendChild(script);
+  }
+
+  // Google Maps callback (must be global)
+  (window as any).initMap = function () {
+    const mapEl = document.getElementById('map');
+    if (!mapEl) return;
+
+    // Default: Oslo sentrum
+    const defaultPos = { lat: 59.9139, lng: 10.7522 };
+
+    map = new google.maps.Map(mapEl, {
+      center: defaultPos,
+      zoom: 19,
+      mapTypeId: 'satellite',
+      tilt: 0,
+      mapTypeControl: false,
+      streetViewControl: false,
+      fullscreenControl: true,
+    });
+
+    // Drawing manager
+    drawingManager = new google.maps.drawing.DrawingManager({
+      drawingMode: null,
+      drawingControl: false,
+      polygonOptions: {
+        fillColor: '#0d9e6e',
+        fillOpacity: 0.25,
+        strokeColor: '#0d9e6e',
+        strokeWeight: 2,
+        editable: true,
+        draggable: true,
+      },
+    });
+    drawingManager.setMap(map);
+
+    google.maps.event.addListener(drawingManager, 'polygoncomplete', (polygon: any) => {
+      if (currentPolygon) currentPolygon.setMap(null);
+      currentPolygon = polygon;
+      drawingManager.setDrawingMode(null);
+      calculateArea();
+
+      // Recalculate when edited
+      google.maps.event.addListener(polygon.getPath(), 'set_at', calculateArea);
+      google.maps.event.addListener(polygon.getPath(), 'insert_at', calculateArea);
+    });
+
+    // Places autocomplete
+    const input = document.getElementById('mapAddress') as HTMLInputElement;
+    if (input) {
+      const autocomplete = new google.maps.places.Autocomplete(input, {
+        componentRestrictions: { country: 'no' },
+        fields: ['geometry'],
+      });
+
+      autocomplete.addListener('place_changed', () => {
+        const place = autocomplete.getPlace();
+        if (place.geometry?.location) {
+          map.setCenter(place.geometry.location);
+          map.setZoom(20);
+        }
+      });
+    }
+
+    // Search button
+    document.getElementById('searchBtn')?.addEventListener('click', searchAddress);
+
+    // Draw button
+    document.getElementById('drawBtn')?.addEventListener('click', () => {
+      drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYGON);
+    });
+
+    // Clear button
+    document.getElementById('clearBtn')?.addEventListener('click', clearDrawing);
+  };
+
+  function searchAddress() {
+    const input = document.getElementById('mapAddress') as HTMLInputElement;
+    if (!input?.value.trim() || !map) return;
+
+    const geocoder = new google.maps.Geocoder();
+    geocoder.geocode(
+      { address: input.value + ', Norge', componentRestrictions: { country: 'NO' } },
+      (results: any, status: any) => {
+        if (status === 'OK' && results[0]) {
+          map.setCenter(results[0].geometry.location);
+          map.setZoom(20);
+        }
+      }
+    );
+  }
+
+  function clearDrawing() {
+    if (currentPolygon) {
+      currentPolygon.setMap(null);
+      currentPolygon = null;
+    }
+    footprintSqm = 0;
+    const resultsEl = document.getElementById('calcResults');
+    if (resultsEl) resultsEl.style.display = 'none';
+  }
+
+  function calculateArea() {
+    if (!currentPolygon) return;
+
+    const path = currentPolygon.getPath();
+    footprintSqm = google.maps.geometry.spherical.computeArea(path);
+
+    updateResults();
+  }
+
+  function updateResults() {
+    if (footprintSqm <= 0) return;
+
+    const resultsEl = document.getElementById('calcResults');
+    if (resultsEl) resultsEl.style.display = 'block';
+
+    const pitchRad = (currentPitchAngle * Math.PI) / 180;
+    const roofSqm = footprintSqm / Math.cos(pitchRad);
+
+    const footprintEl = document.getElementById('footprintArea');
+    const roofEl = document.getElementById('roofArea');
+    const priceEl = document.getElementById('priceEstimate');
+
+    if (footprintEl) footprintEl.textContent = `${footprintSqm.toFixed(0)} m²`;
+    if (roofEl) roofEl.textContent = `${roofSqm.toFixed(0)} m²`;
+
+    const priceLow = Math.round(roofSqm * PRICE_PER_SQM * 0.8 / 100) * 100;
+    const priceHigh = Math.round(roofSqm * PRICE_PER_SQM * 1.2 / 100) * 100;
+    if (priceEl) priceEl.textContent = `${priceLow.toLocaleString('nb-NO')} – ${priceHigh.toLocaleString('nb-NO')} kr`;
+  }
+
+  // Pitch buttons
+  function setupPitchButtons() {
+    const btns = document.querySelectorAll('.pitch-btn');
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        btns.forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        currentPitchAngle = parseInt((btn as HTMLElement).dataset.angle || '25');
+        updatePitchDiagram();
+        if (footprintSqm > 0) updateResults();
+      });
+    });
+  }
+
+  function updatePitchDiagram() {
+    const triangle = document.getElementById('pitchTriangle');
+    const text = document.getElementById('pitchAngleText');
+    if (!triangle || !text) return;
+
+    const baseY = 85;
+    const baseLeft = 30;
+    const baseRight = 170;
+    const baseWidth = baseRight - baseLeft;
+
+    const pitchRad = (currentPitchAngle * Math.PI) / 180;
+    const height = (baseWidth / 2) * Math.tan(pitchRad);
+    const peakY = Math.max(baseY - height, 10);
+
+    // Saddle roof shape
+    const midX = (baseLeft + baseRight) / 2;
+    triangle.setAttribute('points', `${baseLeft},${baseY} ${midX},${peakY} ${baseRight},${baseY}`);
+    text.textContent = `${currentPitchAngle}°`;
+    text.setAttribute('y', String(baseY - 5));
+  }
+
+  // Fallback: manual calculator (no API key)
+  function showFallback() {
+    const mapWrapper = document.querySelector('.calc-map-wrapper') as HTMLElement;
+    const searchEl = document.querySelector('.calc-search') as HTMLElement;
+    const fallbackEl = document.getElementById('noApiMessage');
+    const resultsEl = document.getElementById('calcResults');
+
+    if (mapWrapper) mapWrapper.style.display = 'none';
+    if (searchEl) searchEl.style.display = 'none';
+    if (fallbackEl) fallbackEl.style.display = 'block';
+    if (resultsEl) {
+      resultsEl.style.display = 'block';
+      resultsEl.style.marginTop = '1.5rem';
+    }
+
+    const lengthInput = document.getElementById('manualLength') as HTMLInputElement;
+    const widthInput = document.getElementById('manualWidth') as HTMLInputElement;
+
+    function calcManual() {
+      const l = parseFloat(lengthInput?.value || '0');
+      const w = parseFloat(widthInput?.value || '0');
+      if (l > 0 && w > 0) {
+        footprintSqm = l * w;
+        updateResults();
+      }
+    }
+
+    lengthInput?.addEventListener('input', calcManual);
+    widthInput?.addEventListener('input', calcManual);
+  }
+
+  // Kick off
+  initApp();
+  updatePitchDiagram();
+</script>
