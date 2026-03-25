@@ -1,14 +1,18 @@
 ---
+import BeforeAfter from './BeforeAfter.astro';
+
 interface Props {
   heading: string;
   intro: string;
   items: string[];
-  imagePlaceholder: string;
+  beforeImage?: string;
+  afterImage?: string;
+  imagePlaceholder?: string;
   whyHeading: string;
   whyCards: { title: string; text: string }[];
 }
 
-const { heading, intro, items, imagePlaceholder, whyHeading, whyCards } = Astro.props;
+const { heading, intro, items, beforeImage, afterImage, imagePlaceholder, whyHeading, whyCards } = Astro.props;
 ---
 
 <section class="service-detail">
@@ -22,8 +26,11 @@ const { heading, intro, items, imagePlaceholder, whyHeading, whyCards } = Astro.
         </ul>
         <a href="/tilbud" class="btn btn-primary">Få tilbud →</a>
       </div>
-      <div class="detail-image">
-        {imagePlaceholder}
+      <div>
+        <BeforeAfter
+          beforeImage={beforeImage}
+          afterImage={afterImage}
+        />
       </div>
     </div>
   </div>
